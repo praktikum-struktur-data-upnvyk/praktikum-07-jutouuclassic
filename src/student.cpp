@@ -67,6 +67,10 @@ using namespace std;
 //     preorder(&satu);      // mencetak:  42
 // =============================================================================
 void preorder(const Node* root) {
+     if (root == nullptr) return;
+    cout << root->data << " ";
+    preorder(root->left);
+    preorder(root->right);
 }
 
 // =============================================================================
@@ -90,6 +94,10 @@ void preorder(const Node* root) {
 //     inorder(NULL);     // tidak mencetak apa pun
 // =============================================================================
 void inorder(const Node* root) {
+     if (root == nullptr) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
 }
 
 // =============================================================================
@@ -114,6 +122,10 @@ void inorder(const Node* root) {
 //     postorder(NULL);   // tidak mencetak apa pun
 // =============================================================================
 void postorder(const Node* root) {
+    if (root == nullptr) return;
+    postorder(root->left);
+    postorder(root->right);
+    cout << root->data << " ";
 }
 
 // =============================================================================
@@ -140,6 +152,14 @@ void postorder(const Node* root) {
 //     clear(root);              // aman, tidak terjadi apa-apa
 // =============================================================================
 void clear(Node*& root) {
+    if(root == nullptr) return;
+
+    clear(root->left);
+    clear(root->right);
+    
+    delete root;
+    
+    root = nullptr;
 }
 
 // =============================================================================
@@ -177,7 +197,16 @@ void clear(Node*& root) {
 //     3                           masih punya satu cabang)
 // =============================================================================
 int jumlahDaun(const Node* root) {
-    return 0;
+     // Base Case 1: Pohon kosong -> 0 daun
+    if (root == nullptr) return 0;
+    
+    // Base Case 2: Node ini tidak punya cabang kiri & kanan -> Daun (hitung 1)
+    if (root->left == nullptr && root->right == nullptr) {
+        return 1;
+    }
+    
+    // Rekursi: Jumlahkan daun dari cabang kiri dan kanan
+    return jumlahDaun(root->left) + jumlahDaun(root->right);
 }
 
 // =============================================================================
